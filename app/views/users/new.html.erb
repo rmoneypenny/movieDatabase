@@ -1,0 +1,29 @@
+<div id = "error">
+	<% if @user.errors.any? %>
+		<% @user.errors.full_messages.each do |e| %>
+			<%= e %>
+			<br>
+		<% end %>
+	<% end %>
+</div>
+
+
+<%=form_tag users_path do%>
+	<%= label_tag "Name" %>
+	<br>
+	<%= text_field_tag :name %>
+	<br>
+	<%= label_tag "Email" %>
+	<br>
+	<%= text_field_tag :email %>
+	<br>
+	<%= label_tag "Password" %>
+	<br>
+	<%= password_field_tag :password %>
+	<br>
+	<%= label_tag "Confirm Password" %>
+	<br>
+	<%= password_field_tag :password_confirmation %>
+	<br>
+	<%= submit_tag "Create" %>
+<% end %>

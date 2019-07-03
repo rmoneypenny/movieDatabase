@@ -1,0 +1,31 @@
+<nav class="navbar-default">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Movies!</a>
+		<ul class="nav navbar-nav" style="float: right" >
+			<li><%=link_to "Home", root_path %></li>
+			<li><%=link_to "Movies", '#' %></li>
+			<li><%=link_to "Reviews", '#' %></li>
+			<li><%=link_to "About", '#' %></li>
+		    <li class="dropdown">
+		      <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown"> Log In <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li>
+		            <%= form_tag new_user_path do %>
+		              <%= label_tag "Name" %>
+		              <br>
+		              <%= text_field_tag :name %>
+		              <br>
+		              <%= label_tag "Password" %>
+		              <br>
+		              <%= password_field_tag :password %>
+		              <br>
+		              <%= submit_tag "Login" %>
+		            <% end %>
+		          </li>
+		          <li><a class="dropdown-item"><%=link_to "Register", new_user_path%></a></li>
+		        </ul>
+		    </li>
+		    <li>   </li>
+		</ul>
+	</div>
+</nav>
