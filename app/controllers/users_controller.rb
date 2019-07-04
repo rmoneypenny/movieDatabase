@@ -14,6 +14,10 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def settings
+		puts session[:user_id]
+	end
+
 	def user_params
 		params.permit(:name, :email, :password, :password_confirmation)
 	end
