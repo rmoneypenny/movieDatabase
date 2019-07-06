@@ -2,7 +2,7 @@ class PagesController < ApplicationController
 
 	def show
 		movie = MovieAPI.new
-		movie.movieList
+		movie.movieList(1)
 	end
 
 end

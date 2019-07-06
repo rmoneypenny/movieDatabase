@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: 'pages#show'
   resources :users, only: [:new, :create]
 
+  resources :movies, only: [:index, :show]
+
   get 'settings', to: 'users#settings'
 
   post 'login', to: 'sessions#new'
