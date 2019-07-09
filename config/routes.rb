@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :movies, only: [:index, :show]
 
+  get 'searchMovies', to: 'movies#searchMovies'
+  post 'searchMovies', to: 'movies#searchMovies'
+
   get 'settings', to: 'users#settings'
 
   post 'login', to: 'sessions#new'

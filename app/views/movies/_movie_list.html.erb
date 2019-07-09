@@ -1,0 +1,37 @@
+<%= @test %>
+<br>
+
+
+<input type="text" name="search-field" value="Search for a movie">
+<button type="button" class="btn search-box">Search</button>
+
+	
+<%= form_tag searchMovies_path do %>
+
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+	  <label class="btn btn-secondary active">
+	  	<%= radio_button_tag 'category', 'title' %> Title
+	  </label>
+	  <label class="btn btn-secondary">
+	    <%= radio_button_tag 'category', 'releaseDate' %> Release Date
+	  </label>
+	  <label class="btn btn-secondary">
+	    <%= radio_button_tag 'category', 'genre' %> Genre
+	  </label>
+	</div>
+
+
+	<br>
+	<%= submit_tag "Create", class: "btn-primary"  %>
+<% end %>
+
+
+
+<br>
+<% @movieList.each do |m| %>
+	<%= m[0] %>
+	<br>
+<% end %>
+	<br>
+<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1}), :remote => true %>
+<%= link_to "Next", searchMovies_path({:page => @movie.page + 1}), :remote => true %>
