@@ -5,23 +5,11 @@
 	<%= submit_tag "Search", class: "btn search-box" %>
 <% end %>
 	  	
-<div style= "<%= @categoryHide %>">
-	<label>
-		<%= button_to "Title", searchMovies_path({:page => @movie.page, :category => "Title", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
-	</label>
-	<label>
-		<%= button_to "Release Date", searchMovies_path({:page => @movie.page, :category => "Release Date", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
-	</label>
-	<label>
-		<%= button_to "Genre", searchMovies_path({:page => @movie.page, :category => "Genre", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
-	</label>
-</div>	
-
 
 <% @movieList.each do |m| %>
 	<%= m[0] %>
 	<br>
 <% end %>
 	<br>
-<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search, :category => @movie.category}), :remote => true %>
-<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search, :category => @movie.category}), :remote => true %>
+<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search}), :remote => true %>
+<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search}), :remote => true %>

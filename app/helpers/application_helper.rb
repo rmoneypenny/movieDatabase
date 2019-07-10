@@ -9,11 +9,7 @@ module ApplicationHelper
 		SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 
 		attr_accessor :page
-		attr_accessor :category
 		attr_accessor :search
-		#&sort_by=popularity.desc
-		#release_date.desc
-		#popularity.desc
 
 		def initialize(page = 1, search = "")
 
@@ -25,7 +21,6 @@ module ApplicationHelper
 				@genreHash[g["id"]] = g["name"]
 			end
 			page > 0 ? (@page = page) : (@page = 1)
-			@category = "&sort_by=popularity.desc"
 			@search = search
 		end
 
@@ -33,7 +28,7 @@ module ApplicationHelper
 			if @search == ""
 				fullURL = BASE_URL + API_URL + LANGUAGE_URL + END_URL + page.to_s + RELEASEDATE_URL + DateTime.now.strftime("%Y-%m-%d")
 			else
-				fullURL = SEARCH_URL + API_URL + "&query=" + @search
+				fullURL = SEARCH_URL + API_URL + LANGUAGE_URL + "&query=" + @search + END_URL + page.to_s
 			end
 
 			request = HTTParty.get(fullURL).to_json
@@ -63,17 +58,6 @@ module ApplicationHelper
 			genreNames
 		end
 
-		def setCategory(category)
-			case category
-			when "Title"
-				@category = "&sort_by=original_title.desc"
-			when "Release Date"
-				@category = "&sort_by=release_date.desc"
-			when "Genre"
-				@category = "&sort_by=original_title.desc"
-			end
-
-		end
 
 
 	end
