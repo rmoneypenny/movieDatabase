@@ -1,37 +1,27 @@
-<%= @test %>
-<br>
 
 
-<input type="text" name="search-field" value="Search for a movie">
-<button type="button" class="btn search-box">Search</button>
-
-	
-<%= form_tag searchMovies_path do %>
-
-	<div class="btn-group btn-group-toggle" data-toggle="buttons">
-	  <label class="btn btn-secondary active">
-	  	<%= radio_button_tag 'category', 'title' %> Title
-	  </label>
-	  <label class="btn btn-secondary">
-	    <%= radio_button_tag 'category', 'releaseDate' %> Release Date
-	  </label>
-	  <label class="btn btn-secondary">
-	    <%= radio_button_tag 'category', 'genre' %> Genre
-	  </label>
-	</div>
-
-
-	<br>
-	<%= submit_tag "Create", class: "btn-primary"  %>
+<%=form_tag(searchMovies_path, :remote => true) do%>
+	<%= text_field_tag :search, nil, placeholder: "Search for a movie" %>
+	<%= submit_tag "Search", class: "btn search-box" %>
 <% end %>
+	  	
+<div style= "<%= @categoryHide %>">
+	<label>
+		<%= button_to "Title", searchMovies_path({:page => @movie.page, :category => "Title", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
+	</label>
+	<label>
+		<%= button_to "Release Date", searchMovies_path({:page => @movie.page, :category => "Release Date", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
+	</label>
+	<label>
+		<%= button_to "Genre", searchMovies_path({:page => @movie.page, :category => "Genre", :search => @movie.search}), class: "btn btn-secondary", :remote => true  %>
+	</label>
+</div>	
 
 
-
-<br>
 <% @movieList.each do |m| %>
 	<%= m[0] %>
 	<br>
 <% end %>
 	<br>
-<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1}), :remote => true %>
-<%= link_to "Next", searchMovies_path({:page => @movie.page + 1}), :remote => true %>
+<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search, :category => @movie.category}), :remote => true %>
+<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search, :category => @movie.category}), :remote => true %>
