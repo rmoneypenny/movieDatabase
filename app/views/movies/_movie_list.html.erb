@@ -1,15 +1,43 @@
 
+				
 
-<%=form_tag(searchMovies_path, :remote => true) do%>
-	<%= text_field_tag :search, nil, placeholder: "Search for a movie" %>
-	<%= submit_tag "Search", class: "btn search-box" %>
-<% end %>
-	  	
+<div class="container-fluid">
+		<div class="col-sm-3">
+		</div>
+		<div class="col-sm-6">
 
-<% @movieList.each do |m| %>
-	<%= m[0] %>
-	<br>
-<% end %>
-	<br>
-<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search}), :remote => true %>
-<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search}), :remote => true %>
+			<%=form_tag(searchMovies_path, :remote => true) do%>
+				<%= text_field_tag :search, nil, placeholder: "Search for a movie" %>
+				<%= submit_tag "Search", class: "btn search-box" %>
+			<% end %>
+			<br>	  	
+
+			<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search}), :remote => true %>
+			<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search}), :remote => true %>
+
+			<% @movieList.each do |m| %>
+				<div class="row" style="border-style: solid; background-color: lightgray">
+					<div class="col-sm-4">
+						<div class="row">
+							<img src="<%= m[3] %>">
+						</div>
+						<div class="row">
+							Stars go here
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="row">
+							<div id="title" style="font-size: 1.5em">
+								<%= m[0] %>
+							</div>
+							Release Date: <%= m[1] %>
+							<br>
+							Genre: <%= m[2] %>
+						</div>
+					</div>
+				</div>
+			<% end %>
+			<%= link_to "Previous", searchMovies_path({:page => @movie.page - 1, :search => @movie.search}), :remote => true %>
+			<%= link_to "Next", searchMovies_path({:page => @movie.page + 1, :search => @movie.search}), :remote => true %>
+		</div>
+</div>
