@@ -33,7 +33,21 @@
 							Release Date: <%= m[1] %>
 							<br>
 							Genre: <%= m[2] %>
+							<br>
+							<br>
+							<div id="review-link">
+								<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
+							</div>
+							<div id="review-<%= m[4]%>" style="display: none">
+								<%= form_tag reviews_path do %>
+									<%= hidden_field_tag "moviedbid", m[4] %>
+									<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
+									<br>
+									<%= submit_tag "Submit" %>
+								<% end %>
+							</div>
 						</div>
+
 					</div>
 				</div>
 			<% end %>

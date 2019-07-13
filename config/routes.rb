@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
 
   resources :movies, only: [:index, :show]
+  resources :reviews, only: [:create]
 
   get 'searchMovies', to: 'movies#searchMovies'
   post 'searchMovies', to: 'movies#searchMovies'

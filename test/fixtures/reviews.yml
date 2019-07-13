@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  moviedbid: 1
+  comment: MyString
+  date: 2019-07-12
+  score: 1
+
+two:
+  user_id: 1
+  moviedbid: 1
+  comment: MyString
+  date: 2019-07-12
+  score: 1

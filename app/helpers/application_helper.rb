@@ -63,8 +63,10 @@ module ApplicationHelper
 				else
 					movie.push("https://dummyimage.com/185x308/e0d7e0/fff&text=No+Poster+Available")
 				end
+				movie.push(t["id"].to_s)
 				allMovies.push(movie)
 			end
+			#[title, release date, [genres], poster path, moviedbid]
 			allMovies
 		end
 
