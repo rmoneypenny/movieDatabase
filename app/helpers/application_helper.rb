@@ -1,27 +1,21 @@
 module ApplicationHelper
 	class MovieAPI
 
-		BASE_URL = "https://api.themoviedb.org/3/discover/movie"
+		BASE_URL = "https://api.themoviedb.org/3/"
 		API_URL = "?api_key=#{ENV['MOVIEDB_API_KEY']}"
 		LANGUAGE_URL = "&language=en-US"
 		RELEASEDATE_URL = "&release_date.lte="
 		END_URL = "&include_adult=false&include_video=false&page="
 		SORT_URL = "&sort_by=popularity.desc"
-		SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 		IMAGE_URL = "https://image.tmdb.org/t/p/w185/"
 
 
-
-# Choose from one of the many available sort options.
-
-# Allowed Values: , popularity.asc, popularity.desc, release_date.asc, release_date.desc, revenue.asc, revenue.desc, primary_release_date.asc, primary_release_date.desc, original_title.asc, original_title.desc, vote_average.asc, vote_average.desc, vote_count.asc, vote_count.desc
-# default: popularity.desc 
 		attr_accessor :page
 		attr_accessor :search
 
 		def initialize(page = 1, search = "")
 
-			genreURL = "https://api.themoviedb.org/3/genre/movie/list" + API_URL + LANGUAGE_URL
+			genreURL = BASE_URL + "genre/movie/list" + API_URL + LANGUAGE_URL
 			request = HTTParty.get(genreURL).to_json
 			genreList = JSON.parse(request)
 			@genreHash = {}
@@ -34,9 +28,9 @@ module ApplicationHelper
 
 		def buildURL(page)
 			if @search == ""
-				fullURL = BASE_URL + API_URL + LANGUAGE_URL + END_URL + page.to_s + SORT_URL + RELEASEDATE_URL + DateTime.now.strftime("%Y-%m-%d")
+				fullURL = BASE_URL + "discover/movie" + API_URL + LANGUAGE_URL + END_URL + page.to_s + SORT_URL + RELEASEDATE_URL + DateTime.now.strftime("%Y-%m-%d")
 			else
-				fullURL = SEARCH_URL + API_URL + LANGUAGE_URL + "&query=" + @search + END_URL + page.to_s
+				fullURL = BASE_URL + "search/movie" + API_URL + LANGUAGE_URL + "&query=" + @search + END_URL + page.to_s
 			end
 			request = HTTParty.get(fullURL).to_json
 			@request_hash = JSON.parse(request)
@@ -72,12 +66,28 @@ module ApplicationHelper
 
 
 		def getGenre(genreIds)
-			genreNames = ""
+			genreNames = []
 			genreIds.each do |g|
-				genreNames += " | #{@genreHash[g]}"
+				genreNames.push(@genreHash[g])
 			end
-			genreNames += " |"
 			genreNames
+		end
+
+		def getMovieInfo(moviedbid)
+			searchURL = BASE_URL + "movie/" + moviedbid + API_URL + LANGUAGE_URL
+			request = HTTParty.get(searchURL).to_json
+			movieHash = JSON.parse(request)
+			movieInfo = []
+			genreNames = []
+			movieInfo.push(moviedbid)
+			movieInfo.push(movieHash["title"])
+			movieInfo.push(Date.parse(movieHash["release_date"]))
+			movieHash["genres"].each do |g|
+				genreNames.push(g["name"])
+			end
+			#[moviedbid, title, release_date, [genres]]
+			movieInfo.push(genreNames)
+			movieInfo
 		end
 
 

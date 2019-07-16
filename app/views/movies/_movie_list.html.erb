@@ -32,7 +32,11 @@
 							</div>
 							Release Date: <%= m[1] %>
 							<br>
-							Genre: <%= m[2] %>
+							Genre: 
+							<%= " | " %>
+							<% m[2].each do |m| %>
+								<%= m + " | " %>
+							<% end %>
 							<br>
 							<br>
 							<div id="review-link">
@@ -40,6 +44,18 @@
 							</div>
 							<div id="review-<%= m[4]%>" style="display: none">
 								<%= form_tag reviews_path do %>
+									<span id="stars-<%= m[4] %>">
+										<button type="button" class="btn btn-default btn-sm">
+  											<span class="glyphicon glyphicon-star star one-star"></span>
+  											<span class="glyphicon glyphicon-star star two-star"></span>
+  											<span class="glyphicon glyphicon-star star three-star"></span>
+  											<span class="glyphicon glyphicon-star-empty four-star"></span>
+  											<span class="glyphicon glyphicon-star-empty five-star"></span>
+  											<br>
+										</button>
+										<%= hidden_field_tag "score", 3 %>
+									</span>
+									<br>
 									<%= hidden_field_tag "moviedbid", m[4] %>
 									<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
 									<br>
