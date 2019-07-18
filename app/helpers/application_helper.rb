@@ -1,4 +1,6 @@
 module ApplicationHelper
+	include SessionHelper
+
 	class MovieAPI
 
 		BASE_URL = "https://api.themoviedb.org/3/"
@@ -40,7 +42,7 @@ module ApplicationHelper
 			self.buildURL(@page)
 			allMovies = []
 			@request_hash["results"].each do |t|
-				
+			review = Review.new
 				movie = []
 				movie.push(t["title"])
 
@@ -58,9 +60,12 @@ module ApplicationHelper
 					movie.push("https://dummyimage.com/185x308/e0d7e0/fff&text=No+Poster+Available")
 				end
 				movie.push(t["id"].to_s)
+				movie.push(review.getReviews(t["id"],3))
+				movie.push(review.avgScore(t["id"]))
+				movie.push(review.userReviewIDs(t["id"]))
 				allMovies.push(movie)
 			end
-			#[title, release date, [genres], poster path, moviedbid]
+			#[title, release date, [genres], poster path, moviedbid, Reviews, avgScore, userReviewIDs]
 			allMovies
 		end
 

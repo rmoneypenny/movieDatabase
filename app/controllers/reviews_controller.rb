@@ -11,16 +11,9 @@ class ReviewsController < ApplicationController
 			movie.save
 		end
 
-		puts params
-		#review = Review.new()
-
+		Review.create(user_id: current_user.id, moviedbid: params[:moviedbid], comment: params[:comment], date: DateTime.now.to_date, score: params[:score])
+		redirect_to movies_path
 	end
 
 end
 
-
-    # t.integer "user_id"
-    # t.integer "moviedbid"
-    # t.string "comment"
-    # t.date "date"
-    # t.integer "score"

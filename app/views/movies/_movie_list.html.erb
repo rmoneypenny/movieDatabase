@@ -22,7 +22,12 @@
 							<img src="<%= m[3] %>">
 						</div>
 						<div class="row">
-							Stars go here
+							<% m[6].times do %>
+								<span class="glyphicon glyphicon-star star"></span>
+							<% end %>
+							<% (5-m[6]).times do %>
+								<span class="glyphicon glyphicon-star-empty"></span>
+							<% end %>							
 						</div>
 					</div>
 					<div class="col-sm-8">
@@ -39,29 +44,56 @@
 							<% end %>
 							<br>
 							<br>
-							<div id="review-link">
-								<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
-							</div>
-							<div id="review-<%= m[4]%>" style="display: none">
-								<%= form_tag reviews_path do %>
-									<span id="stars-<%= m[4] %>">
-										<button type="button" class="btn btn-default btn-default">
-  											<span class="glyphicon glyphicon-star star star-hover one-star"></span>
-  											<span class="glyphicon glyphicon-star star star-hover two-star"></span>
-  											<span class="glyphicon glyphicon-star star star-hover three-star"></span>
-  											<span class="glyphicon glyphicon-star-empty star-hover four-star"></span>
-  											<span class="glyphicon glyphicon-star-empty star-hover five-star"></span>
-  											<br>
-										</button>
-									</span>
-									<%= number_field_tag "score", 3, id: "score-#{m[4]}", style: "display: none" %>
-									<br>
-									<%= hidden_field_tag "moviedbid", m[4] %>
-									<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
-									<br>
-									<%= submit_tag "Submit" %>
+							<% if m[5].count > 0 %>
+
+								<% m[5].each do |r| %>
+									<div class="row">
+										<div class="col-sm-4">
+											<% r[0].times do %>
+												<span class="glyphicon glyphicon-star star"></span>
+											<% end %>
+											<% (5-r[0]).times do %>
+												<span class="glyphicon glyphicon-star-empty"></span>
+											<% end %>
+										</div>
+										<div class="col-sm-4">
+											"<%= r[1] %>"
+										</div>
+										<div class="col-sm-4">
+											<%= r[2] %>
+										</div>																
+									</div>
 								<% end %>
-							</div>
+							<% else %>
+								There are no reviews for this movie.
+							<% end %>
+							<br>
+							<br>
+							<% if !m[7].include?(current_user.id) %>
+								<div id="<%= m[4] %>">
+									<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
+								</div>
+								<div id="review-<%= m[4]%>" style="display: none">
+									<%= form_tag reviews_path do %>
+										<span id="stars-<%= m[4] %>">
+											<button type="button" class="btn btn-default btn-default">
+	  											<span class="glyphicon glyphicon-star star star-hover one-star"></span>
+	  											<span class="glyphicon glyphicon-star star star-hover two-star"></span>
+	  											<span class="glyphicon glyphicon-star star star-hover three-star"></span>
+	  											<span class="glyphicon glyphicon-star-empty star-hover four-star"></span>
+	  											<span class="glyphicon glyphicon-star-empty star-hover five-star"></span>
+	  											<br>
+											</button>
+										</span>
+										<%= number_field_tag "score", 3, id: "score-#{m[4]}", style: "display: none" %>
+										<br>
+										<%= hidden_field_tag "moviedbid", m[4] %>
+										<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
+										<br>
+										<%= submit_tag "Submit" %>
+									<% end %>
+								</div>
+							<% end %>
 						</div>
 
 					</div>
