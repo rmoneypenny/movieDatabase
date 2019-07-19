@@ -1,6 +1,5 @@
 module ApplicationHelper
-	include SessionHelper
-
+	
 	class MovieAPI
 
 		BASE_URL = "https://api.themoviedb.org/3/"
@@ -90,8 +89,9 @@ module ApplicationHelper
 			movieHash["genres"].each do |g|
 				genreNames.push(g["name"])
 			end
-			#[moviedbid, title, release_date, [genres]]
 			movieInfo.push(genreNames)
+			movieInfo.push(IMAGE_URL + movieHash["poster_path"])
+			#[moviedbid, title, release_date, [genres], poster]
 			movieInfo
 		end
 

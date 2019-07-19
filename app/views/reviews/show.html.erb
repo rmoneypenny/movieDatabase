@@ -1,0 +1,67 @@
+
+				
+
+<div class="container-fluid">
+		<div class="col-sm-1">
+		</div>
+		<div class="col-sm-10">
+			<div class="row" style="border-style: solid; background-color: lightgray">
+				<div class="col-sm-3">
+					<div class="row">
+						<img src="<%= @movie.poster_path %>">
+					</div>
+					<div class="row">
+						<% @avgScore.times do %>
+								<span class="glyphicon glyphicon-star star"></span>
+							<% end %>
+							<% (5-@avgScore).times do %>
+								<span class="glyphicon glyphicon-star-empty"></span>
+							<% end %>							
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div id="title" style="font-size: 1.5em">
+							<%= @movie.title %>
+						</div>
+							Release Date: <%= @movie.releasedate %>
+							<br>
+							Genre: 
+							<%= " | " %>
+							<% @genres.each do |g| %>
+								<%= g.name + " | " %>
+							<% end %>
+							<br>
+							<br>
+							<% @reviews.each do |r| %>
+								<div class="row" >
+									<div class="col-sm-2">
+										<% r.score.times do %>
+												<span class="glyphicon glyphicon-star star"></span>
+											<% end %>
+											<% (5-r.score).times do %>
+												<span class="glyphicon glyphicon-star-empty"></span>
+											<% end %>
+									</div>
+									<div class="col-sm-6">
+										<% if r.comment == "" %>
+											(no comment given)
+										<% else %>
+											"<%= r.comment %>"
+										<% end %>
+									</div>
+									<div class="col-sm-2">
+										<%= User.find(r.user_id).email %>
+									</div>	
+									<div class="col-sm-2">
+										<%= r.date %>
+									</div>																
+								</div>
+							<% end %>
+							<br>
+							<br>
+						</div>
+					</div>
+				</div>
+		</div>
+</div>

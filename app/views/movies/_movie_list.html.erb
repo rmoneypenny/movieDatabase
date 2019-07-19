@@ -47,7 +47,7 @@
 							<% if m[5].count > 0 %>
 
 								<% m[5].each do |r| %>
-									<div class="row">
+									<div class="row" >
 										<div class="col-sm-4">
 											<% r[0].times do %>
 												<span class="glyphicon glyphicon-star star"></span>
@@ -57,7 +57,11 @@
 											<% end %>
 										</div>
 										<div class="col-sm-4">
-											"<%= r[1] %>"
+											<% if r[1] == "" %>
+												(no comment given)
+											<% else %>
+												"<%= r[1] %>"
+											<% end %>
 										</div>
 										<div class="col-sm-4">
 											<%= r[2] %>
@@ -67,6 +71,15 @@
 							<% else %>
 								There are no reviews for this movie.
 							<% end %>
+
+							<% if m[5].count == 3 %>
+								<br>
+								<div id="<%= m[4] %>">
+									<button id="moreReviews"> View More </button>
+								</div>
+							<% end %>
+
+
 							<br>
 							<br>
 							<% if !m[7].include?(current_user.id) %>

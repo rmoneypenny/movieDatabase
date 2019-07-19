@@ -37,6 +37,14 @@ $(document).on("click", ".five-star", function(){
 	updateScoreField(divID, score);  
 });	
 
+$(document).on("click", "#moreReviews", function(){
+	var moviedbid = $(this).parent().attr("id");
+	$(location).attr('href', "/reviews/" + moviedbid);
+
+});	
+
+
+
 function updateStars(divID, score){
 
 	var html = "<button type=\"button\" class=\"btn btn-default btn-default\">";
