@@ -37,11 +37,11 @@
 								<div class="row" >
 									<div class="col-sm-2">
 										<% r.score.times do %>
-												<span class="glyphicon glyphicon-star star"></span>
-											<% end %>
-											<% (5-r.score).times do %>
-												<span class="glyphicon glyphicon-star-empty"></span>
-											<% end %>
+											<span class="glyphicon glyphicon-star star"></span>
+										<% end %>
+										<% (5-r.score).times do %>
+											<span class="glyphicon glyphicon-star-empty"></span>
+										<% end %>
 									</div>
 									<div class="col-sm-6">
 										<% if r.comment == "" %>

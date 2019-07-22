@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show]
   resources :reviews, only: [:create, :show, :index]
 
+  get 'searchReviews', to: 'reviews#searchReviews'
+  post 'searchReviews', to: 'reviews#searchReviews'
+
   get 'searchMovies', to: 'movies#searchMovies'
   post 'searchMovies', to: 'movies#searchMovies'
 

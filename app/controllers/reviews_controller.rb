@@ -24,7 +24,43 @@ class ReviewsController < ApplicationController
 	end
 
 	def index
+		@rev = Review.new
+		@page = 0
+		@buttonStatus = ["", "", "", "active"]
+		@sort = [false, "desc"]
+		@reviews = @rev.reviewSearch(@page)
+	end
+
+	def searchReviews
+		@buttonStatus = params[:buttonStatus] || ["", "", "", ""]
+		@title = params[:title] || ""
+		@score = params[:score] || "0"
+		@dateBegin = params[:dateBegin] || ""
+		@dateEnd = params[:dateEnd] || ""
+		@genre = params[:genre] || ""
+		@sort = params[:sort] || [false, ""]
+		@page = 0
+		@rev = Review.new
 		
+		if @sort[0] == "true"
+			@sort[1] == "asc" ? (@sort = [false, "desc"]) : (@sort = [false, "asc"])
+		end
+		#check to ensure page doesn't drop below 0
+		if params[:page]
+			params[:page].to_i > 0 ? (@page = params[:page].to_i) : (@page = 0)
+		end
+		@reviews = @rev.reviewSearch(@page, @title, @score.to_i, @dateBegin, @dateEnd, @genre, @sort[1], @buttonStatus)
+		#check if page number goes beyond search results
+		if @reviews.empty?
+			@page -= 1
+			@reviews = @rev.reviewSearch(@page, @title, @score.to_i, @dateBegin, @dateEnd, @genre, @sort[1], @buttonStatus)
+		end
+		
+
+		respond_to do |format|
+			format.html
+			format.js
+		end
 	end
 
 end

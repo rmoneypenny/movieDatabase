@@ -1,0 +1,75 @@
+
+<div class="container-fluid">
+	<div class="col-sm-3" style="border:solid">
+		<%= form_tag searchReviews_path, :remote => true do %>
+			<%= label_tag "Title:" %>
+			<%= text_field_tag :title %>
+			<br>
+			<%= label_tag "Score:" %>
+			<%= number_field_tag :score, nil, in: 1..5 %>
+			<br>
+			<%= label_tag "Date Begin:" %>
+			<%= date_field_tag :dateBegin %>
+			<br>
+			<%= label_tag "Date End:" %>
+			<%= date_field_tag :dateEnd %>
+			<br>
+			<%= label_tag "Genre:" %>
+			<%= text_field_tag :genre %>
+			<br>
+			<%= submit_tag "Search" %>
+		<% end %>
+	</div>
+
+	<div class="col-sm-6">
+		<div class="btn-group">
+			<label class="btn">
+				<%= button_to "Title", searchReviews_path({:page => @page, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => ["active", "", "", ""], :sort => [true, @sort[1]]}), :remote => true, class: "btn " + @buttonStatus[0]%>
+			</label>
+			<label class="btn">
+				<%= button_to "Score", searchReviews_path({:page => @page, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => ["", "active", "", ""], :sort => [true, @sort[1]]}), :remote => true, class: "btn " + @buttonStatus[1] %>
+			</label>
+			<label class="btn">
+				<%= button_to "Genre", searchReviews_path({:page => @page, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => ["", "", "active", ""], :sort => [true, @sort[1]]}), :remote => true, class: "btn " + @buttonStatus[2] %>
+			</label>
+			<label class="btn">
+				<%= button_to "Release Date", searchReviews_path({:page => @page, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => ["", "", "", "active"], :sort => [true, @sort[1]]}), :remote => true, class: "btn " + @buttonStatus[3] %>
+			</label>
+		</div>
+		<br>
+		<%= link_to "Prev", searchReviews_path({:page => @page - 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
+		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
+		<br>
+		<% @reviews.each do |r| %>
+			<div class="row review-result">
+				<div class="col-sm-6">
+					<%= Movie.find_by(moviedbid: r.moviedbid).title %>
+				</div>
+				<div class="col-sm-3">
+					<% r.score.times do %>
+						<span class="glyphicon glyphicon-star star"></span>
+					<% end %>
+					<% (5-r.score).times do %>
+						<span class="glyphicon glyphicon-star-empty"></span>
+					<% end %>
+				</div>
+				<div class="col-sm-3">
+					<%= r.date %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7">
+					<%= r.comment == "" ? ("(no comment)") : (r.comment) %>
+				</div>
+				<div class="col-sm-5">
+					<%= User.find(r.user_id).email %>
+				</div>
+			</div>
+
+		<% end %>
+		<br>
+
+		<%= link_to "Prev", searchReviews_path({:page => @page - 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => @buttonStatus, :sort => @sort}), :remote => true %>
+		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => @buttonStatus, :sort => @sort}), :remote => true %>
+	</div>
+</div>
