@@ -41,6 +41,17 @@
 		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
 		<br>
 		<% @reviews.each do |r| %>
+			<div class="row review-genre">
+				<div class="col-sm-9">
+					<div align="center"> 
+						Genre: 
+						<% r.getGenres(@buttonStatus, @sort[1]).each do |g| %> 
+							| <%= g.name %>
+						<% end %>
+						|
+					</div> 		
+				</div>		
+			</div>
 			<div class="row review-result">
 				<div class="col-sm-6">
 					<%= Movie.find_by(moviedbid: r.moviedbid).title %>
@@ -54,15 +65,18 @@
 					<% end %>
 				</div>
 				<div class="col-sm-3">
-					<%= r.date %>
+					<%= Movie.find_by(moviedbid: r.moviedbid).releasedate %>
 				</div>
-			</div>
+			</div>			
 			<div class="row">
-				<div class="col-sm-7">
+				<div class="col-sm-5">
 					<%= r.comment == "" ? ("(no comment)") : (r.comment) %>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-sm-4">
 					<%= User.find(r.user_id).email %>
+				</div>
+				<div class="col-sm-3">
+					<%= r.date %>
 				</div>
 			</div>
 

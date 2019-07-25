@@ -11,7 +11,10 @@ class ReviewsController < ApplicationController
 			movie.save
 		end
 
-		Review.create(user_id: current_user.id, moviedbid: params[:moviedbid], comment: params[:comment], date: DateTime.now.to_date, score: params[:score])
+		review = Review.new(user_id: current_user.id, moviedbid: params[:moviedbid], comment: params[:comment], date: DateTime.now.to_date, score: params[:score])
+		review.save
+		genre = Genre.where(moviedbid: params[:moviedbid])
+		review.genres << genre
 		redirect_to movies_path
 	end
 
@@ -32,16 +35,15 @@ class ReviewsController < ApplicationController
 	end
 
 	def searchReviews
-		@buttonStatus = params[:buttonStatus] || ["", "", "", ""]
+		@buttonStatus = params[:buttonStatus] || ["", "", "", "active"]
 		@title = params[:title] || ""
 		@score = params[:score] || "0"
 		@dateBegin = params[:dateBegin] || ""
 		@dateEnd = params[:dateEnd] || ""
 		@genre = params[:genre] || ""
-		@sort = params[:sort] || [false, ""]
+		@sort = params[:sort] || [false, "desc"]
 		@page = 0
 		@rev = Review.new
-		
 		if @sort[0] == "true"
 			@sort[1] == "asc" ? (@sort = [false, "desc"]) : (@sort = [false, "asc"])
 		end
