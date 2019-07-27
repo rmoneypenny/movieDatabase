@@ -14,7 +14,9 @@ class ReviewsController < ApplicationController
 		review = Review.new(user_id: current_user.id, moviedbid: params[:moviedbid], comment: params[:comment], date: DateTime.now.to_date, score: params[:score])
 		review.save
 		genre = Genre.where(moviedbid: params[:moviedbid])
+		movie = Movie.find_by(moviedbid: params[:moviedbid])
 		review.genres << genre
+		movie.reviews << review
 		redirect_to movies_path
 	end
 

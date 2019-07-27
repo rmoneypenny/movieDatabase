@@ -1,0 +1,159 @@
+<% current_user %>
+
+<div class="container-fluid" style="word-wrap: break-word;">
+
+
+	<div class="col-sm-7">
+		<% @movie.each do |m| %>
+			<div class="row" style="border-style: solid; background-color: lightgray">
+				<div class="col-sm-4">
+					<div class="row">
+						<img src="<%= m.poster_path %>">
+					</div>
+					<div class="row">
+						<% @review.avgScore(m.moviedbid).times do %>
+							<span class="glyphicon glyphicon-star star"></span>
+						<% end %>
+						<% (5-@review.avgScore(m.moviedbid)).times do %>
+							<span class="glyphicon glyphicon-star-empty"></span>
+						<% end %>							
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<div class="row">
+						<div id="title" style="font-size: 1.5em">
+							<%= link_to m.title, "/reviews/" + m.moviedbid.to_s %>
+						</div>
+						Release Date: <%= m.releasedate %>
+						<br>
+						Genre: 
+						<%= " | " %>
+						<% Genre.where(moviedbid: m.moviedbid).each do |g| %>
+							<%= g.name + " | " %>
+						<% end %>
+						<br>
+						<br>
+						<% m.reviews.limit(3).each do |r| %>
+							<div class="row" >
+								<div class="col-sm-4">
+									<% r.score.times do %>
+										<span class="glyphicon glyphicon-star star"></span>
+									<% end %>
+									<% (5-r.score).times do %>
+										<span class="glyphicon glyphicon-star-empty"></span>
+									<% end %>
+								</div>
+								<div class="col-sm-3">
+									<% if r.comment == "" %>
+										(no comment given)
+									<% else %>
+										"<%= r.comment %>"
+									<% end %>
+								</div>
+								<div class="col-sm-4">
+									<%= User.find(r.user_id).email %>
+								</div>	
+							</div>
+						<% end %>
+						<% if m.reviews.count > 3 %>
+							<br>
+							<div id="<%= m.moviedbid %>">
+								<button id="moreReviews"> View More </button>
+							</div>
+						<% end %>
+						<% if logged_in? %>
+							<% if m.reviews.where(user_id: current_user.id).count < 1 %>
+								<div id="<%= m.moviedbid %>">
+									<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
+								</div>
+								<div id="review-<%= m.moviedbid%>" style="display: none">
+									<%= form_tag reviews_path do %>
+										<span id="stars-<%= m.moviedbid %>">
+											<button type="button" class="btn btn-default btn-default">
+	  											<span class="glyphicon glyphicon-star star star-hover one-star"></span>
+	  											<span class="glyphicon glyphicon-star star star-hover two-star"></span>
+	  											<span class="glyphicon glyphicon-star star star-hover three-star"></span>
+	  											<span class="glyphicon glyphicon-star-empty star-hover four-star"></span>
+	  											<span class="glyphicon glyphicon-star-empty star-hover five-star"></span>
+	  											<br>
+											</button>
+										</span>
+										<%= number_field_tag "score", 3, id: "score-#{m.moviedbid}", style: "display: none" %>
+										<br>
+										<%= hidden_field_tag "moviedbid", m.moviedbid %>
+										<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
+										<br>
+										<%= submit_tag "Submit" %>
+									<% end %>
+								</div>
+							<% end %>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+	<div class="col-sm-1">
+	</div>
+
+	<div class="col-sm-4" style="border-style: solid; background-color: lightgray">
+		<br>
+		<div align="center"> Recent Reviews </div>
+		<br>
+		<% @recentReviews.each do |r| %>
+			<div class="row">
+				<div class="col-sm-8" style="font-weight: bold">
+					<%= Movie.find_by(moviedbid: r.moviedbid).title %>
+				</div>
+				<div class="col-sm-4">
+					<% r.score.times do %>
+						<span class="glyphicon glyphicon-star star"></span>
+					<% end %>
+					<% (5-r.score).times do %>
+						<span class="glyphicon glyphicon-star-empty"></span>
+					<% end %>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					"<%= r.comment %>"
+				</div>
+			</div>
+			<br>
+		<% end %>
+		<div class="row">
+			<div class="col-sm-12">
+				<%= link_to "View all reviews", reviews_path %>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div align="center" style="border-top-style: ridge;"> <br> Recent Movies </div>
+		<br>
+		<% @movie.limit(5).each do |m| %>
+			<div class="row">
+				<div class="col-sm-8" style="font-weight: bold">
+					<%= m.title %>
+				</div>
+				<div class="col-sm-4">
+					<% @review.avgScore(m.moviedbid).times do %>
+						<span class="glyphicon glyphicon-star star"></span>
+					<% end %>
+					<% (5-@review.avgScore(m.moviedbid)).times do %>
+						<span class="glyphicon glyphicon-star-empty"></span>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+		<br>
+		<div class="row">
+			<div class="col-sm-12">
+				<%= link_to "View all movies", movies_path %>
+			</div>
+		</div>
+		
+	</div>
+
+
+
+</div>

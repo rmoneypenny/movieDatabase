@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid" style="word-wrap: break-word;">
 	<div class="col-sm-3" style="border:solid">
 		<%= form_tag searchReviews_path, :remote => true do %>
 			<%= label_tag "Title:" %>
@@ -17,8 +17,9 @@
 			<%= label_tag "Genre:" %>
 			<%= text_field_tag :genre %>
 			<br>
-			<%= submit_tag "Search" %>
+			<%= submit_tag "Search", class: "btn search-box" %>
 		<% end %>
+		<br>
 	</div>
 
 	<div class="col-sm-6">
@@ -38,10 +39,11 @@
 		</div>
 		<br>
 		<%= link_to "Prev", searchReviews_path({:page => @page - 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
+		<%= @page + 1 %>
 		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
 		<br>
 		<% @reviews.each do |r| %>
-			<div class="row review-genre">
+			<div class="row review-genre" style="border-top-style: solid;">
 				<div class="col-sm-9">
 					<div align="center"> 
 						Genre: 
@@ -84,6 +86,7 @@
 		<br>
 
 		<%= link_to "Prev", searchReviews_path({:page => @page - 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => @buttonStatus, :sort => @sort}), :remote => true %>
+		<%= @page + 1 %>
 		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => @buttonStatus, :sort => @sort}), :remote => true %>
 	</div>
 </div>

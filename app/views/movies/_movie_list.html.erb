@@ -1,7 +1,7 @@
+<% current_user %>
+    				
 
-				
-
-<div class="container-fluid">
+<div class="container-fluid" style="word-wrap: break-word;">
 		<div class="col-sm-3">
 		</div>
 		<div class="col-sm-6">
@@ -82,30 +82,32 @@
 
 							<br>
 							<br>
-							<% if !m[7].include?(current_user.id) %>
-								<div id="<%= m[4] %>">
-									<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
-								</div>
-								<div id="review-<%= m[4]%>" style="display: none">
-									<%= form_tag reviews_path do %>
-										<span id="stars-<%= m[4] %>">
-											<button type="button" class="btn btn-default btn-default">
-	  											<span class="glyphicon glyphicon-star star star-hover one-star"></span>
-	  											<span class="glyphicon glyphicon-star star star-hover two-star"></span>
-	  											<span class="glyphicon glyphicon-star star star-hover three-star"></span>
-	  											<span class="glyphicon glyphicon-star-empty star-hover four-star"></span>
-	  											<span class="glyphicon glyphicon-star-empty star-hover five-star"></span>
-	  											<br>
-											</button>
-										</span>
-										<%= number_field_tag "score", 3, id: "score-#{m[4]}", style: "display: none" %>
-										<br>
-										<%= hidden_field_tag "moviedbid", m[4] %>
-										<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
-										<br>
-										<%= submit_tag "Submit" %>
-									<% end %>
-								</div>
+							<% if logged_in? %>
+								<% if !m[7].include?(current_user.id) %>
+									<div id="<%= m[4] %>">
+										<button type="button" class="btn btn-primary btn-sm review-button">Leave a Review</button>
+									</div>
+									<div id="review-<%= m[4]%>" style="display: none">
+										<%= form_tag reviews_path do %>
+											<span id="stars-<%= m[4] %>">
+												<button type="button" class="btn btn-default btn-default">
+		  											<span class="glyphicon glyphicon-star star star-hover one-star"></span>
+		  											<span class="glyphicon glyphicon-star star star-hover two-star"></span>
+		  											<span class="glyphicon glyphicon-star star star-hover three-star"></span>
+		  											<span class="glyphicon glyphicon-star-empty star-hover four-star"></span>
+		  											<span class="glyphicon glyphicon-star-empty star-hover five-star"></span>
+		  											<br>
+												</button>
+											</span>
+											<%= number_field_tag "score", 3, id: "score-#{m[4]}", style: "display: none" %>
+											<br>
+											<%= hidden_field_tag "moviedbid", m[4] %>
+											<%= text_area_tag "comment", nil, rows: 2, cols: 40 %>
+											<br>
+											<%= submit_tag "Submit" %>
+										<% end %>
+									</div>
+								<% end %>
 							<% end %>
 						</div>
 

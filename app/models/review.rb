@@ -2,6 +2,7 @@ class Review < ApplicationRecord
 
 	has_many :reviewGenres
 	has_many :genres, through: :reviewGenres
+	belongs_to :movie
 
 	SEARCH_RESULTS = 6
 
