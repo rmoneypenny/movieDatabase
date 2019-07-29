@@ -2,12 +2,10 @@
 
 one:
   moviedbid: 1
-  title: MyString
+  title: Avengers
   releasedate: 2019-07-05
-  genre: MyString
 
 two:
-  moviedbid: 1
-  title: MyString
-  releasedate: 2019-07-05
-  genre: MyString
+  moviedbid: 2
+  title: Cars
+  releasedate: 2019-04-05

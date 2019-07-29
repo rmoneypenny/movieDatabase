@@ -3,13 +3,27 @@
 one:
   user_id: 1
   moviedbid: 1
-  comment: MyString
+  comment: purple
   date: 2019-07-12
   score: 1
 
 two:
   user_id: 1
+  moviedbid: 2
+  comment: blue
+  date: 2019-07-12
+  score: 1
+
+three:
+  user_id: 2
   moviedbid: 1
-  comment: MyString
+  comment: green
+  date: 2019-07-12
+  score: 1
+
+four:
+  user_id: 2
+  moviedbid: 2
+  comment: red
   date: 2019-07-12
   score: 1

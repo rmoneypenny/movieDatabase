@@ -2,8 +2,22 @@
 
 one:
   moviedbid: 1
-  name: MyString
+  name: Action
 
 two:
   moviedbid: 1
-  name: MyString
+  name: Drama
+
+three:
+  moviedbid: 2
+  name: Comedy
+
+four:
+  moviedbid: 2
+  name: Action
+
+five:
+  moviedbid: 2
+  name: Romance
+
+

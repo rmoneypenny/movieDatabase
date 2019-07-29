@@ -37,6 +37,8 @@ gem 'httparty', '~> 0.13.7'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
+
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
