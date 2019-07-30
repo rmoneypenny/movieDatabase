@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
 
   resources :movies, only: [:index, :show]
-  resources :reviews, only: [:create, :show, :index]
+  resources :reviews, only: [:create, :show, :index, :edit, :update, :destroy]
 
   get 'searchReviews', to: 'reviews#searchReviews'
   post 'searchReviews', to: 'reviews#searchReviews'
@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   post 'searchMovies', to: 'movies#searchMovies'
 
   get 'settings', to: 'users#settings'
+  get 'settings/editReviews', to: 'reviews#loggedInUserReviews'
+  get 'settings/editUser', to: 'users#editUser'
+  patch 'settings/editUser', to: 'users#update'
+  patch 'settings/updatePassword', to: 'users#updatePassword'
 
   post 'login', to: 'sessions#new'
   delete 'logout', to: 'sessions#destroy'

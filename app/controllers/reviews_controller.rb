@@ -67,5 +67,46 @@ class ReviewsController < ApplicationController
 		end
 	end
 
+	def loggedInUserReviews
+		@reviews = Review.where(user_id: current_user.id)
+	end
+
+	def edit
+		@review = Review.find(params[:id])
+		@movie = Movie.find_by(moviedbid: @review.moviedbid)
+		if @review.user_id != current_user.id
+			flash[:error] = "Review ID is associated with a different user"
+			redirect_to root_path
+		end
+	end
+
+	def update
+		@review = Review.find(params[:id])
+		if @review.user_id == current_user.id
+			@review.update(score: params[:score], comment: params[:comment], date: DateTime.now.to_date)
+			flash[:notice] = "Review updated!"
+			redirect_to settings_editReviews_path
+		else
+			flash[:error] = "Review ID is associated with a different user"
+			redirect_to root_path
+		end
+	end
+
+	def destroy
+		@review = Review.find(params[:id])
+		@rg = ReviewGenre.where(review_id: @review.id)
+		@movie = Movie.find_by(moviedbid: @review.moviedbid)
+		if @review.user_id == current_user.id
+			@rg.destroy_all
+			@review.destroy
+			@movie.reviews.count == 0 ? (@movie.destroy) : (nil)
+			flash[:notice] = "Review deleted!"
+			redirect_to settings_editReviews_path
+		else
+			flash[:error] = "Review ID is associated with a different user"
+			redirect_to root_path
+		end		
+	end
+
 end
 

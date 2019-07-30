@@ -1,0 +1,50 @@
+<% current_user %>
+
+<div id = "error">
+	<% if @user.errors.any? %>
+		<% @user.errors.full_messages.each do |e| %>
+			<%= e %>
+			<br>
+		<% end %>
+	<% end %>
+</div>
+
+<div class="container-fluid">
+	<%= render 'shared/settings_sidebar' %>
+	<div class="col-sm-5">
+		<%=form_tag settings_editUser_path, method: :patch do%>
+			<%= label_tag "Name" %>
+			<br>
+			<%= text_field_tag :name, @user.name %>
+			<br>
+			<%= label_tag "Email" %>
+			<br>
+			<%= text_field_tag :email, @user.email %>
+			<br>
+			Type in your password to confirm
+			<br>
+			<%= label_tag "Password" %>
+			<%= password_field_tag :password %>
+			<br>
+			<%= submit_tag "Update" %>
+		<% end %>
+	</div>
+
+	<div class="col-sm-5">
+		Change Password
+		<%=form_tag settings_updatePassword_path, method: :patch do%>
+			<%= label_tag "Current Password" %>
+			<%= password_field_tag :current_password %>
+			<br>
+			<%= label_tag "New Password" %>
+			<%= password_field_tag :password %>
+			<br>
+			<%= label_tag "Confirm Password" %>
+			<%= password_field_tag :password_confirmation %>
+			<br>
+			<%= submit_tag "Update" %>
+		<% end %>
+	</div>
+
+
+</div>

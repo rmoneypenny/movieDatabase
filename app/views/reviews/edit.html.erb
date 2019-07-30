@@ -1,0 +1,21 @@
+<div class="container-fluid">
+	<%= render 'shared/settings_sidebar' %>
+	<div class="col-sm-10">
+		<%=form_tag review_path, method: :patch do%>
+			<%= hidden_field_tag :id, @review.id %>
+			<%= label_tag "Title" %>
+			<br>
+			<%= text_field_tag :name, @movie.title, disabled: true %>
+			<br>
+			<%= label_tag "Score" %>
+			<br>
+			<%= number_field_tag :score, @review.score, in: 1..5 %>
+			<br>
+			<%= label_tag "Comment" %>
+			<br>
+			<%= text_area_tag :comment, @review.comment %>
+			<br>
+			<%= submit_tag "Update" %>
+		<% end %>
+	</div>
+</div>
