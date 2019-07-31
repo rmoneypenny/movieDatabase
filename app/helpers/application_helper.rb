@@ -1,3 +1,6 @@
+require "httparty"
+
+
 module ApplicationHelper
 	
 	class MovieAPI
