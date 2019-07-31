@@ -16,13 +16,6 @@ module ApplicationHelper
 
 		def initialize(page = 1, search = "")
 
-			genreURL = BASE_URL + "genre/movie/list" + API_URL + LANGUAGE_URL
-			request = HTTParty.get(genreURL).to_json
-			genreList = JSON.parse(request)
-			@genreHash = {}
-			genreList["genres"].each do |g|
-				@genreHash[g["id"]] = g["name"]
-			end
 			page > 0 ? (@page = page) : (@page = 1)
 			@search = search
 		end
@@ -70,6 +63,15 @@ module ApplicationHelper
 
 
 		def getGenre(genreIds)
+			genreURL = BASE_URL + "genre/movie/list" + API_URL + LANGUAGE_URL
+			request = HTTParty.get(genreURL).to_json
+			genreList = JSON.parse(request)
+			@genreHash = {}
+			
+			genreList["genres"].each do |g|
+				@genreHash[g["id"]] = g["name"]
+			end
+			
 			genreNames = []
 			genreIds.each do |g|
 				genreNames.push(@genreHash[g])
