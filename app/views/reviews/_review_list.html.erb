@@ -42,47 +42,48 @@
 		<%= @page + 1 %>
 		<%= link_to "Next", searchReviews_path({:page => @page + 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre}), :remote => true %>
 		<br>
-		<% @reviews.each do |r| %>
-			<div class="row review-genre" style="border-top-style: solid;">
-				<div class="col-sm-9">
-					<div align="center"> 
-						Genre: 
-						<% r.getGenres(@buttonStatus, @sort[1]).each do |g| %> 
-							| <%= g.name %>
+		
+			<% @reviews.each do |r| %>
+				<div class="row review-genre" style="border-top-style: solid;">
+					<div class="col-sm-9">
+						<div align="center"> 
+							Genre: 
+							<% r.getGenres(@buttonStatus, @sort[1]).each do |g| %> 
+								| <%= g.name %>
+							<% end %>
+							|
+						</div> 		
+					</div>		
+				</div>
+				<div class="row review-result">
+					<div class="col-sm-6">
+						<%= Movie.find_by(moviedbid: r.moviedbid).title %>
+					</div>
+					<div class="col-sm-3">
+						<% r.score.times do %>
+							<span class="glyphicon glyphicon-star star"></span>
 						<% end %>
-						|
-					</div> 		
-				</div>		
-			</div>
-			<div class="row review-result">
-				<div class="col-sm-6">
-					<%= Movie.find_by(moviedbid: r.moviedbid).title %>
+						<% (5-r.score).times do %>
+							<span class="glyphicon glyphicon-star-empty"></span>
+						<% end %>
+					</div>
+					<div class="col-sm-3">
+						<%= Movie.find_by(moviedbid: r.moviedbid).releasedate %>
+					</div>
+				</div>			
+				<div class="row">
+					<div class="col-sm-5">
+						<%= r.comment == "" ? ("(no comment)") : (r.comment) %>
+					</div>
+					<div class="col-sm-4">
+						<%= User.find(r.user_id).email %>
+					</div>
+					<div class="col-sm-3">
+						<%= r.date %>
+					</div>
 				</div>
-				<div class="col-sm-3">
-					<% r.score.times do %>
-						<span class="glyphicon glyphicon-star star"></span>
-					<% end %>
-					<% (5-r.score).times do %>
-						<span class="glyphicon glyphicon-star-empty"></span>
-					<% end %>
-				</div>
-				<div class="col-sm-3">
-					<%= Movie.find_by(moviedbid: r.moviedbid).releasedate %>
-				</div>
-			</div>			
-			<div class="row">
-				<div class="col-sm-5">
-					<%= r.comment == "" ? ("(no comment)") : (r.comment) %>
-				</div>
-				<div class="col-sm-4">
-					<%= User.find(r.user_id).email %>
-				</div>
-				<div class="col-sm-3">
-					<%= r.date %>
-				</div>
-			</div>
 
-		<% end %>
+			<% end %>
 		<br>
 
 		<%= link_to "Prev", searchReviews_path({:page => @page - 1, :title => @title, :score => @score, :dateBegin => @dateBegin, :dateEnd => @dateEnd, :genre => @genre, :buttonStatus => @buttonStatus, :sort => @sort}), :remote => true %>

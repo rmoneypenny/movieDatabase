@@ -135,17 +135,18 @@ class Review < ApplicationRecord
 		sortField.include?("active") ? (sortFieldIndex = sortField.index("active")) : (sortFieldIndex = 3)
 		
 		#[Title, Score, Genre, ReleaseDate, no search]
-		case sortFieldIndex
-			when 0
-				reviews = self.sortByMovieTitle(reviews, sort, offset)
-			when 1
-				reviews = reviews.order(score: sortDirection).limit(SEARCH_RESULTS).offset(SEARCH_RESULTS * offset)				
-			when 2
-				reviews = self.sortByGenre(reviews, sort, offset)
-			when 3
-				reviews = self.sortByReleaseDate(reviews, sort, offset)
+		if reviews.count > 0
+			case sortFieldIndex
+				when 0
+					reviews = self.sortByMovieTitle(reviews, sort, offset)
+				when 1
+					reviews = reviews.order(score: sortDirection).limit(SEARCH_RESULTS).offset(SEARCH_RESULTS * offset)				
+				when 2
+					reviews = self.sortByGenre(reviews, sort, offset)
+				when 3
+					reviews = self.sortByReleaseDate(reviews, sort, offset)
+			end
 		end
-
 		reviews
 	end
 
