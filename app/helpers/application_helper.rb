@@ -67,11 +67,10 @@ module ApplicationHelper
 
 		def getGenre(genreIds)
 			genreURL = BASE_URL + "genre/movie/list" + API_URL + LANGUAGE_URL
+			byebug
 			request = HTTParty.get(genreURL).to_json
 			genreList = JSON.parse(request)
 			@genreHash = {}
-			puts "@@@@@@@@@@"
-			puts genreList
 			genreList["genres"].each do |g|
 				@genreHash[g["id"]] = g["name"]
 			end
