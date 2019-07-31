@@ -13,7 +13,8 @@ module ApplicationHelper
 
 		attr_accessor :page
 		attr_accessor :search
-
+		@request_hash = {}
+		
 		def initialize(page = 1, search = "")
 
 			page > 0 ? (@page = page) : (@page = 1)
@@ -67,7 +68,7 @@ module ApplicationHelper
 			request = HTTParty.get(genreURL).to_json
 			genreList = JSON.parse(request)
 			@genreHash = {}
-			
+
 			genreList["genres"].each do |g|
 				@genreHash[g["id"]] = g["name"]
 			end
