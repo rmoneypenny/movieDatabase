@@ -4,7 +4,7 @@ class PagesController < ApplicationController
 		@movie = Movie.order(releasedate: :desc).limit(10)
 		@review = Review.new
 		@genres = Genre.new
-		@recentReviews = Review.order(date: :desc).limit(3)
+		@recentReviews = Review.order(updated_at: :desc).limit(3)
 	end
 
 	def about

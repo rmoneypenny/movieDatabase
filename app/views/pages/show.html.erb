@@ -116,7 +116,11 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					"<%= r.comment %>"
+					<% if r.comment == "" %>
+						(no comment given)
+					<% else %>
+						"<%= r.comment %>"
+					<% end %>
 				</div>
 			</div>
 			<br>
