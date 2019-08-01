@@ -7,4 +7,8 @@ class PagesController < ApplicationController
 		@recentReviews = Review.order(date: :desc).limit(3)
 	end
 
+	def about
+
+	end
+
 end
