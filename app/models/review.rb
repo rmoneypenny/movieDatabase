@@ -20,7 +20,7 @@ class Review < ApplicationRecord
 			individualReview = []
 			individualReview.push(r.score.to_i)
 			individualReview.push(r.comment)
-			individualReview.push(User.find(r.user_id).email)
+			individualReview.push(User.find(r.user_id).name)
 			individualReview.push(r.date.to_s)
 			reviewArray.push(individualReview)
 		end

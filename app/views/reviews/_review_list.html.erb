@@ -76,7 +76,7 @@
 						<%= r.comment == "" ? ("(no comment)") : (r.comment) %>
 					</div>
 					<div class="col-sm-4">
-						<%= User.find(r.user_id).email %>
+						<%= User.find(r.user_id).name %>
 					</div>
 					<div class="col-sm-3">
 						<%= r.date.strftime("%b %e, %Y") %>
