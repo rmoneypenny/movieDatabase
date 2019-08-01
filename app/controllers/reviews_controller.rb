@@ -99,7 +99,11 @@ class ReviewsController < ApplicationController
 		if @review.user_id == current_user.id
 			@rg.destroy_all
 			@review.destroy
-			@movie.reviews.count == 0 ? (@movie.destroy) : (nil)
+			if @movie.reviews.count == 0
+				Genre.where(moviedbid: @movie.moviedbid).destroy_all
+				@movie.destroy
+			end
+			#@movie.reviews.count == 0 ? (@movie.destroy) : (nil)
 			flash[:notice] = "Review deleted!"
 			redirect_to settings_editReviews_path
 		else
