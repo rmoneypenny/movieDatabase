@@ -45,15 +45,12 @@ class Review < ApplicationRecord
 				dateB = Date.parse(dateBegin)		
 				dateE = Date.parse(dateEnd)
 				movieIDs = Movie.where(["releasedate >= ? and releasedate <= ?", dateB, dateE]).pluck(:moviedbid)
-				reviews = reviews.where(moviedbid: movieIDs)
 		elsif dateBegin != ""
 				date = Date.parse(dateBegin)		
 				movieIDs = Movie.where("releasedate >= ?", date).pluck(:moviedbid)
-				reviews = reviews.where(moviedbid: movieIDs)
 		elsif dateEnd != ""		
 				date = Date.parse(dateEnd)		
 				movieIDs = Movie.where("releasedate <= ?", date).pluck(:moviedbid)
-				reviews = reviews.where(moviedbid: movieIDs)
 		end		
 	
 		if !noSearch

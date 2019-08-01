@@ -68,7 +68,7 @@
 						<% end %>
 					</div>
 					<div class="col-sm-3">
-						<%= Movie.find_by(moviedbid: r.moviedbid).releasedate %>
+						<%= Movie.find_by(moviedbid: r.moviedbid).releasedate.strftime("%b %e, %Y")%>
 					</div>
 				</div>			
 				<div class="row">
@@ -79,7 +79,7 @@
 						<%= User.find(r.user_id).email %>
 					</div>
 					<div class="col-sm-3">
-						<%= r.date %>
+						<%= r.date.strftime("%b %e, %Y") %>
 					</div>
 				</div>
 
