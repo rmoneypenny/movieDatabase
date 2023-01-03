@@ -32,7 +32,7 @@ gem 'autoprefixer-rails'
 
 gem 'figaro'
 
-gem 'httparty', '~> 0.13.7'
+gem 'httparty', '~> 0.21.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
